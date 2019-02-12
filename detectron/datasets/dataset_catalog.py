@@ -241,6 +241,20 @@ _DATASETS = {
             _DATA_DIR + '/sim10k/JPEGImages',
         _ANN_FN:
             _DATA_DIR + '/sim10k/car_instances.json',
+    },
+
+    'jacquard_test': {
+         _IM_DIR:
+            _DATA_DIR + '/jacquard_test/grasps',
+        _ANN_FN:
+            _DATA_DIR + '/jacquard_test/instances_grasps_train2018.json',
+    },
+    
+    'jacquard_train': {
+         _IM_DIR:
+            _DATA_DIR + '/jacquard_train/grasps',
+        _ANN_FN:
+            _DATA_DIR + '/jacquard_train/instances_grasps_train2018.json',
     }
 }
 
