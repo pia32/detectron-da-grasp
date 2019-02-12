@@ -1,64 +1,12 @@
 # Domain Adaptive Faster R-CNN in Detectron 
 
-This is a Caffe2 implementation of 'Domain Adaptive Faster R-CNN for Object Detection in the Wild', implemented by Haoran Wang(haowang@student.ethz.ch). The original paper can be found [here](https://arxiv.org/pdf/1803.03243.pdf). This implementation is built on [Detectron](https://github.com/facebookresearch/Detectron) @ [5ed75f9](https://github.com/facebookresearch/Detectron/commit/5ed75f9d672b3c78b7da92d9b2321d04f33a7ccc).
+Forked from [Krumo's modification of Detectron](https://github.com/krumo/Detectron-DA-Faster-RCNN) to implement the techniques in this paper.
 
-If you find this repository useful, please cite the oringinal paper:
+[Domain Adaptive Faster R-CNN for Object Detection in the Wild](https://arxiv.org/abs/1803.03243)
 
-```
-@inproceedings{chen2018domain,
-  title={Domain Adaptive Faster R-CNN for Object Detection in the Wild},
-      author =     {Chen, Yuhua and Li, Wen and Sakaridis, Christos and Dai, Dengxin and Van Gool, Luc},
-      booktitle =  {Computer Vision and Pattern Recognition (CVPR)},
-      year =       {2018}
-  }
-```
+To train deepgrasp on the Jacquard dataset, run the following command
 
-and Detectron:
 
-```
-@misc{Detectron2018,
-  author =       {Ross Girshick and Ilija Radosavovic and Georgia Gkioxari and
-                  Piotr Doll\'{a}r and Kaiming He},
-  title =        {Detectron},
-  howpublished = {\url{https://github.com/facebookresearch/detectron}},
-  year =         {2018}
-}
-```
-## Installation
-
-Please follow the instruction in [Detectron](https://github.com/facebookresearch/Detectron) to install and use Detectron-DomainAdaptive-Faster-RCNN.
-
-## Usage Example
-
-An example of adapting from **Sim10k** dataset to **Cityscapes** dataset is provided:
-1. Download the Cityscapes datasets from [here](https://www.cityscapes-dataset.com/downloads/) and Sim10k datasets from [here](https://fcav.engin.umich.edu/sim-dataset).
-
-2. Convert the labels of Cityscapes datasets and labels of Sim10k datasets to coco format using the scripts 'tools/convert_cityscapes_to_caronly_coco.py' and 'tools/convert_sim10k_to_coco.py'.
-
-3. Convert ImageNet-pretrained VGG16 Caffe model to Detectron format with 'tools/pickle_caffe_blobs.py' or use my converted VGG16 model in [here](https://drive.google.com/file/d/1nlo6TJt0AwlPIkG8e3aXjdVNdmaLOytg/view?usp=sharing) 
-
-4. Train the Domain Adaptive Faster R-CNN:
-    ```Shell
-    cd $DETECTRON
-    python2 tools/train_net.py --cfg configs/da_faster_rcnn_baselines/e2e_da_faster_rcnn_vgg16-sim10k.yaml
-    
-5. Test the trained model:
-    ```Shell
-    cd $DETECTRON
-    python2 tools/test_net.py --cfg configs/da_faster_rcnn_baselines/e2e_da_faster_rcnn_vgg16-sim10k.yaml TEST.WEIGHTS /<path_to_trained_model>/model_final.pkl NUM_GPUS 1
-
-### Pretrained Model & Results
-
-[Pretrained model](https://polybox.ethz.ch/index.php/s/hOUsBoqsapltDfR) with image+instance+consistency domain adaptation for Sim10k->Cityscapes task.
-
-|                  | image                | instsnace            | consistency          | car AP| 
-|------------------|----------------------|----------------------|----------------------|-------|
-| Faster R-CNN     |                      |                      |                      | 32.58 |
-| DA Faster R-CNN  |<ul><li>[x] </li></ul>|                      |                      | 36.13 | 
-| DA Faster R-CNN  |                      |<ul><li>[x] </li></ul>|                      | 36.73 |
-| DA Faster R-CNN  |<ul><li>[x] </li></ul>|<ul><li>[x] </li></ul>|                      | 37.39 | 
-| DA Faster R-CNN  |<ul><li>[x] </li></ul>|<ul><li>[x] </li></ul>|<ul><li>[x] </li></ul>| 38.28 |
-
-## Other Implementation
-[da-faster-rcnn](https://github.com/yuhuayc/da-faster-rcnn) based on Caffe. (original code by paper authors)
-
+```Shell
+cd $DETECTRON
+python tools/train_net.py --cfg configs/deepgrasp/deepgrasp_faster_rcnn.yaml OUTPUT_DIR /tmp/detectron-output
